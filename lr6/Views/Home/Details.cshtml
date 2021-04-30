@@ -1,0 +1,66 @@
+﻿@model lr6.Models.Cargos
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Cargos</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Full_name_client)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Full_name_client)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cargo_code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cargo_code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cargo_weight)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cargo_weight)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Shiping_cost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Shiping_cost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Departure_point)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Departure_point)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Arrival_point)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Arrival_point)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -17,6 +17,7 @@ namespace lr6.Controllers
             return View(cargoDAO.GetAllRecords());
         }
         // GET: /Home/Create
+        [Authorize(Users = "Administrator@post.com")]
         public ActionResult Create()
         {
             return View();
@@ -24,6 +25,7 @@ namespace lr6.Controllers
         //
         // POST: /Home/Create
         [AcceptVerbs(HttpVerbs.Post)]
+        [Authorize(Users = "Administrator@post.com")]
         public ActionResult Create([Bind(Exclude = "ID")] Cargos
        cargos)
         {
@@ -40,6 +42,7 @@ namespace lr6.Controllers
             }
         }
         // GET: Tours/Edit/5
+        [Authorize(Users = "Administrator@post.com")]
         public ActionResult Edit(int id)
         {
             List<Cargos> recordList = cargoDAO.GetAllRecords();
@@ -48,6 +51,7 @@ namespace lr6.Controllers
         }
         // POST: Tours/Edit/5
         [HttpPost]
+        [Authorize(Users = "Administrator@post.com")]
         public ActionResult Edit(Cargos cargo)
         {
             try
@@ -63,6 +67,7 @@ namespace lr6.Controllers
             }
         }
         // GET: Tours/Delete/5
+        [Authorize(Users = "Administrator@post.com")]
         public ActionResult Delete(int id)
         {
             List<Cargos> recordList = cargoDAO.GetAllRecords();
@@ -71,6 +76,7 @@ namespace lr6.Controllers
         }
         // POST: Tours/Delete/5
         [HttpPost]
+        [Authorize(Users = "Administrator@post.com")]
         public ActionResult Delete(Cargos cargo)
         {
             try
@@ -87,6 +93,7 @@ namespace lr6.Controllers
             }
         }
         [HttpGet]
+        [Authorize(Roles = "Admin, Visitor")]
         public ActionResult Details(int id)
         {
             List<Cargos> carlist = cargoDAO.GetAllRecords();
