@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
@@ -10,28 +11,29 @@ namespace lr6.DAO
 {
     public class CargoDAO : DAO
     {
-        public List<Cargos> GetAllRecords()
+        public List<Cars> GetAllTransport()
         {
             Connect();
-            List<Cargos> recordList = new List<Cargos>();
+            List<Cars> recordList = new List<Cars>();
             try
             {
-                SqlCommand command = new SqlCommand("SELECT * FROM Cargo", sqlConnection);
+                DataContext db = new DataContext(sqlConnection);
+                Table<Transport> cars = db.GetTable<Transport>();
 
-                SqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
+                foreach (var car in cars)
                 {
-                    Cargos cargo = new Cargos();
-                    cargo.ID = Convert.ToInt32(reader["Id"]);
-                    cargo.Full_name_client = reader["Full_name_client"].ToString();
-                    cargo.Cargo_code = Convert.ToInt32(reader["Cargo_code"]);
-                    cargo.Cargo_weight = Convert.ToInt32(reader["Cargo_weight"]);
-                    cargo.Shiping_cost = Convert.ToDecimal(reader["Shiping_cost"]);
-                    cargo.Departure_point = reader["Departure_point"].ToString();
-                    cargo.Arrival_point = reader["Arrival_point"].ToString();
-                    recordList.Add(cargo);
+                    Cars auto = new Cars();
+                    auto.ID = Convert.ToInt32(car.Id);
+                    auto.Brand = car.Brand.ToString();
+                    auto.Load_capacity =Convert.ToInt32(car.Load_capacity);
+                    auto.Condition = car.Condition.ToString();
+                    auto.Location = car.Location.ToString();
+                    auto.Number = car.Number.ToString();
+                    auto.Fuel_consuption = Convert.ToInt32(car.Fuel_consuption);
+                    auto.Group_Id = Convert.ToInt32(car.GroupId);
+                    recordList.Add(auto);
                 }
-                reader.Close();
+                
             }
             catch (Exception)
             {
@@ -43,22 +45,26 @@ namespace lr6.DAO
             }
             return recordList;
         }
-        public bool AddRecord(Cargos cargos)
+        public bool AddTransport(Cars auto)
         {
             bool result = true;
             Connect();
             try
             {
-                SqlCommand cmd = new SqlCommand(
-                "INSERT INTO Cargo (Full_name_client, Cargo_code, Cargo_weight, Shiping_cost, Departure_point, Arrival_point)" +
-            "VALUES (@Full_name_client, @Cargo_code, @Cargo_weight, @Shiping_cost, @Departure_point, @Arrival_point)", sqlConnection);
-                cmd.Parameters.Add(new SqlParameter("@Full_name_client", cargos.Full_name_client));
-                cmd.Parameters.Add(new SqlParameter("@Cargo_code", cargos.Cargo_code));
-                cmd.Parameters.Add(new SqlParameter("@Cargo_weight", cargos.Cargo_weight));
-                cmd.Parameters.Add(new SqlParameter("@Shiping_cost", cargos.Shiping_cost));
-                cmd.Parameters.Add(new SqlParameter("@Departure_point", cargos.Departure_point));
-                cmd.Parameters.Add(new SqlParameter("@Arrival_point", cargos.Arrival_point));
-                cmd.ExecuteNonQuery();
+                DataContext db = new DataContext(sqlConnection);
+                Table<Transport> cars = db.GetTable<Transport>();
+
+                Transport data = new Transport {
+                    Brand = auto.Brand, 
+                    Load_capacity = auto.Load_capacity, 
+                    Condition = auto.Condition, 
+                    Location = auto.Location, 
+                    Number = auto.Number, 
+                    Fuel_consuption = auto.Fuel_consuption, 
+                    GroupId = auto.Group_Id};
+
+                db.GetTable<Transport>().InsertOnSubmit(data);
+                db.SubmitChanges();
             }
             catch (Exception)
             {
@@ -70,20 +76,36 @@ namespace lr6.DAO
             }
             return result;
         }
-        public bool EditRecord(Cargos cargos)
+        public bool EditTransport(Cars auto, int selectedId)
         {
             bool result = true;
             Connect();
             try
             {
-                SqlCommand cmd = new SqlCommand("UPDATE Cargo SET Full_name_client = @Full_name_client, Cargo_code = @Cargo_code, Cargo_weight = @Cargo_weight, Shiping_cost = @Shiping_cost, Departure_point = @Departure_point, Arrival_point = @Arrival_point", sqlConnection);
+                DataContext db = new DataContext(sqlConnection);
+                Table<Transport> cars = db.GetTable<Transport>();
+
+                var selectedcar = from car in cars where car.Id == selectedId select auto;
+                Transport data = (Transport)selectedcar;
+
+                data.Brand = ;
+                data.Load_capacity = ;
+                data.Condition = ;
+                data.Location = ;
+                data.Number = ;
+                data.Fuel_consuption = ;
+                data.GroupId = ;
+
+                db.SubmitChanges();
+
+                /*SqlCommand cmd = new SqlCommand("UPDATE Cargo SET Full_name_client = @Full_name_client, Cargo_code = @Cargo_code, Cargo_weight = @Cargo_weight, Shiping_cost = @Shiping_cost, Departure_point = @Departure_point, Arrival_point = @Arrival_point", sqlConnection);
                 cmd.Parameters.Add(new SqlParameter("@Full_name_client", cargos.Full_name_client));
                 cmd.Parameters.Add(new SqlParameter("@Cargo_code", cargos.Cargo_code));
                 cmd.Parameters.Add(new SqlParameter("@Cargo_weight", cargos.Cargo_weight));
                 cmd.Parameters.Add(new SqlParameter("@Shiping_cost", cargos.Shiping_cost));
                 cmd.Parameters.Add(new SqlParameter("@Departure_point", cargos.Departure_point));
                 cmd.Parameters.Add(new SqlParameter("@Arrival_point", cargos.Arrival_point));
-                cmd.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();*/
             }
             catch (Exception)
             {
@@ -95,14 +117,14 @@ namespace lr6.DAO
             }
             return result;
         }
-        public bool DeleteRecord(Cargos cargos)
+        public bool DeleteRecord(Cars auto)
         {
             bool result = true;
             Connect();
             try
             {
                 SqlCommand cmd = new SqlCommand("DELETE FROM Cargo WHERE Id = @id", sqlConnection);
-                cmd.Parameters.Add(new SqlParameter("@id", cargos.ID));
+                cmd.Parameters.Add(new SqlParameter("@id", auto.ID));
                 cmd.ExecuteNonQuery();
             }
             catch (Exception)
