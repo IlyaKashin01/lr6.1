@@ -1,4 +1,4 @@
-﻿@model IEnumerable<lr6.Models.Cargos>
+﻿@model IEnumerable<lr6.Models.Cars>
 
 @{
     ViewBag.Title = "Index";
@@ -12,22 +12,25 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Full_name_client)
+            @Html.DisplayNameFor(model => model.Brand)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Cargo_code)
+            @Html.DisplayNameFor(model => model.Load_capacity)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Cargo_weight)
+            @Html.DisplayNameFor(model => model.Condition)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Shiping_cost)
+            @Html.DisplayNameFor(model => model.Location)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Departure_point)
+            @Html.DisplayNameFor(model => model.Number)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Arrival_point)
+            @Html.DisplayNameFor(model => model.Fuel_consuption)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Group_Id)
         </th>
         <th></th>
     </tr>
@@ -35,22 +38,25 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Full_name_client)
+            @Html.DisplayFor(modelItem => item.Brand)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Cargo_code)
+            @Html.DisplayFor(modelItem => item.Load_capacity)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Cargo_weight)
+            @Html.DisplayFor(modelItem => item.Condition)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Shiping_cost)
+            @Html.DisplayFor(modelItem => item.Location)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Departure_point)
+            @Html.DisplayFor(modelItem => item.Number)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Arrival_point)
+            @Html.DisplayFor(modelItem => item.Fuel_consuption)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Group_Id)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |

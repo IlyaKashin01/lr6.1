@@ -9,7 +9,7 @@ using lr6.Models;
 
 namespace lr6.DAO
 {
-    public class CargoDAO : DAO
+    public class TransportDAO : DAO
     {
         public List<Cars> GetAllTransport()
         {
@@ -88,13 +88,13 @@ namespace lr6.DAO
                 var selectedcar = from car in cars where car.Id == selectedId select auto;
                 Transport data = (Transport)selectedcar;
 
-                data.Brand = ;
-                data.Load_capacity = ;
-                data.Condition = ;
-                data.Location = ;
-                data.Number = ;
-                data.Fuel_consuption = ;
-                data.GroupId = ;
+                data.Brand = auto.Brand;
+                data.Load_capacity = auto.Load_capacity;
+                data.Condition = auto.Condition;
+                data.Location = auto.Location;
+                data.Number = auto.Number;
+                data.Fuel_consuption = auto.Fuel_consuption;
+                data.GroupId = auto.Group_Id;
 
                 db.SubmitChanges();
 
@@ -123,6 +123,7 @@ namespace lr6.DAO
             Connect();
             try
             {
+                
                 SqlCommand cmd = new SqlCommand("DELETE FROM Cargo WHERE Id = @id", sqlConnection);
                 cmd.Parameters.Add(new SqlParameter("@id", auto.ID));
                 cmd.ExecuteNonQuery();

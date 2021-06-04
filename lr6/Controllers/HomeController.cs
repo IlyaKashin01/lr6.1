@@ -10,11 +10,11 @@ namespace lr6.Controllers
 {
     public class HomeController : Controller
     {
-        CargoDAO cargoDAO = new CargoDAO();
+        TransportDAO transportDAO = new TransportDAO();
         // GET: /Home/
         public ActionResult Index()
         {
-            return View(cargoDAO.GetAllTransport());
+            return View(transportDAO.GetAllTransport());
         }
         // GET: /Home/Create
         [Authorize(Users = "Administrator@post.com")]
@@ -31,7 +31,7 @@ namespace lr6.Controllers
         {
             try
             {
-                if (cargoDAO.AddTransport(auto))
+                if (transportDAO.AddTransport(auto))
                     return RedirectToAction("Index");
                 else
                     return View("Create");
@@ -45,7 +45,7 @@ namespace lr6.Controllers
         [Authorize(Users = "Administrator@post.com")]
         public ActionResult Edit(int id)
         {
-            List<Cars> recordList = cargoDAO.GetAllTransport();
+            List<Cars> recordList = transportDAO.GetAllTransport();
             var item = recordList.Find((car) => car.ID == id);
             return View(item);
         }
@@ -56,7 +56,7 @@ namespace lr6.Controllers
         {
             try
             {
-                if (cargoDAO.EditTransport(auto, 1))
+                if (transportDAO.EditTransport(auto, 1))
                     return RedirectToAction("Index");
                 else
                     return View("Edit");
@@ -70,7 +70,7 @@ namespace lr6.Controllers
         [Authorize(Users = "Administrator@post.com")]
         public ActionResult Delete(int id)
         {
-            List<Cars> recordList = cargoDAO.GetAllTransport();
+            List<Cars> recordList = transportDAO.GetAllTransport();
             var item = recordList.Find((car) => car.ID == id);
             return View(item);
         }
@@ -81,7 +81,7 @@ namespace lr6.Controllers
         {
             try
             {
-                if (cargoDAO.DeleteRecord(auto))
+                if (transportDAO.DeleteRecord(auto))
                     return RedirectToAction("Index");
                 else
                     return View();
@@ -96,7 +96,7 @@ namespace lr6.Controllers
         [Authorize(Roles = "Admin, Visitor")]
         public ActionResult Details(int id)
         {
-            List<Cars> carlist = cargoDAO.GetAllTransport();
+            List<Cars> carlist = transportDAO.GetAllTransport();
             var item = carlist.Find((car) => car.ID == id);
             return View(item);
         }
